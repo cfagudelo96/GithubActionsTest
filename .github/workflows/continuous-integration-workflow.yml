@@ -1,0 +1,21 @@
+name: Continuous integration workflow
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.x
+      - name: Install back-end
+        working-directory: github-actions-test-back-end
+        run: npm ci
+      - name: Lint back-end
+        working-directory: github-actions-test-back-end
+        run: npm run lint
+      - name: Test back-end
+        working-directory: github-actions-test-back-end
+        run: npm run test:cov
